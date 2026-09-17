@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+#define MAXN 100
+class Stack{
+	public:
+		int top;
+		int *element;
+		Stack(){
+			top=-1;
+		}
+		bool isEmpty(){
+			return top==-1;
+		}
+		bool isFull(){
+			return top==MAXN-1;
+		}
+		void pushBack(int x){
+			if(isFulll()){
+				return ;
+			}
+			element[++top]=x;
+		}
+		void popBack(){
+			if(isEmpty()){
+				return ;
+			}
+			top--;
+		}
+		int getTop(){
+			if(isEmpty()){
+				return -1;
+			}
+			return element[top];
+		}
+};
+class Queue{
+	public:
+		int front;
+		int rear;
+		int *element;
+		Queue(){
+			front=rear=0;
+		}
+		bool isEmpty(){
+			return rear==0;
+		}
+		bool isFull(){
+			return rear==MAXN-1;
+		}
+		void enQueue(int x){
+			if(isFull()){
+				return ;
+			}
+			element[rear]=x;
+			rear++;
+		}
+		void deQueue(){
+			if(isEmpty()){
+				return ;
+			}
+			front++;
+		}
+		int getFront(){
+			if(isEmpty()){
+				return -1;
+			}
+			return element[front];
+		}
+};
+void reverse(Stack stack){
+	Queue queue;
+	while(!stack.isEmpty()){
+		int x=stack.getTop();
+		stack.popBack();
+		queue.enQueue(x);
+	}
+	while(!queue.isEmpty()){
+		int y=queue.getFront();
+		queue.deQueue();
+		stack.pushBack(y);
+	}
+}
+void printStack(Stack stack){
+	while(!stack.isEmpty()){
+		cout<<stack.getTop()<<" ";
+		stack.popBack();
+	}
+	cout<<endl;
+}
+int main(){
+	Stack stack;
+	stack.pushBack(4);
+	stack.pushBack(3);
+	stack.pushBack(2);
+	stack.pushBack(1);
+	reverse(stack);
+	printStack(stack);
+	return 0;
+}
